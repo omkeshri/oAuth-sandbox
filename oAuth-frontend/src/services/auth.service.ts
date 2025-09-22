@@ -17,7 +17,7 @@ class AuthService {
     const server = apiServer(ctx);
     try {
       const response = await server.get("/auth/verify-token");
-      return response.data;
+      return response;
     } catch (err) {
       throw err;
     }

@@ -21,7 +21,6 @@ api.interceptors.request.use(
 
 export const apiServer = (ctx?: any) => {
   const token = ctx?.req?.headers?.cookie
-
   const instance = axios.create({
     baseURL: environments.API_BASE_URL || "http://localhost:8000",
     headers: { "Content-Type": "application/json" },

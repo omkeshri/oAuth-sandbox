@@ -6,16 +6,19 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
     try {
         const response = await authService.VerifySession(ctx);
-        return {
-            props: {
-                verified: true
+        if (response?.status === 200) {
+            return {
+                props: {
+                    verified: "successfully"
+                }
             }
         }
+        throw new Error;
     }
-    catch {
+    catch{
         return {
             props: {
-                verified: false
+                verified: "not successfully"
             }
         }
     }
@@ -25,7 +28,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 const HomePage = (props: any) => {
     return (
         <div className="flex justify-center items-center w-screen h-screen">
-            You are successfully Logged in!
+            You are {props.verified} Logged in!
         </div>
     )
 }

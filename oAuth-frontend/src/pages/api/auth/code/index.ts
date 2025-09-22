@@ -18,7 +18,7 @@ const ExchangeCode = async (req: any, res: any) => {
       path: "/",
     });
 
-    res.redirect("http://localhost:3000/auth/login");
+    res.redirect("http://localhost:3000");
   } catch (err) {
     console.log(err);
   }

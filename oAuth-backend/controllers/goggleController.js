@@ -1,5 +1,6 @@
 const { default: axios } = require("axios");
 const { createSessionToken } = require("../utils/createSessionToken");
+const { verifySessionToken } = require("../utils/verifySessionToken");
 
 exports.getToken = async (req, res) => {
   const redis = req.app.locals.redis;
@@ -32,7 +33,7 @@ exports.getToken = async (req, res) => {
 
     const sessionToken = createSessionToken(profileRes.data, expires_in);
 
-    await redis.set("session_token", sessionToken, {
+    await redis.set(sessionToken, profileRes.data.email, {
       EX: expires_in,
     });
 
@@ -50,10 +51,19 @@ exports.getToken = async (req, res) => {
 exports.verifyToken = async (req, res) => {
   try {
     console.log(req.headers);
-    res.send("hh")
+    const redis = req.app.locals.redis;
+    const session_token = req.headers?.authorization?.slice(15);
+    const token_data = verifySessionToken(session_token);
+
+    const redis_data = await redis.get(session_token);
+    console.log(token_data.email, redis_data);
+
+    if (token_data?.email === redis_data) {
+      res.status(200).json({ message: "Verified User" });
+    } else throw new Error({ status: 401, message: "un" });
   } catch (err) {
-    res.status(err.status).json({
-      message: err.message,
+    res.status(err?.status || 401).json({
+      message: err?.message || "Unauthorized",
     });
   }
 };
