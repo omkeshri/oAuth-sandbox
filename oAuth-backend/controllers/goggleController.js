@@ -50,7 +50,6 @@ exports.getToken = async (req, res) => {
 
 exports.verifyToken = async (req, res) => {
   try {
-    console.log(req.headers);
     const redis = req.app.locals.redis;
     const session_token = req.headers?.authorization?.slice(15);
     const token_data = verifySessionToken(session_token);
