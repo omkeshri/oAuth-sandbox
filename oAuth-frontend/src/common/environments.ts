@@ -1,0 +1,11 @@
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const GOOGLE_AUTH_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID;
+const REDIRECT_URI=process.env.NEXT_PUBLIC_REDIRECT_URI || "";
+
+const environments = {
+  API_BASE_URL,
+  GOOGLE_AUTH_CLIENT_ID,
+  REDIRECT_URI,
+};
+
+export default environments;
