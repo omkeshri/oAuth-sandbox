@@ -56,7 +56,6 @@ exports.verifyToken = async (req, res) => {
     const token_data = verifySessionToken(session_token);
 
     const redis_data = await redis.get(session_token);
-    console.log(token_data.email, redis_data);
 
     if (token_data?.email === redis_data) {
       res.status(200).json({ message: "Verified User" });
